@@ -1,0 +1,128 @@
+#!/bin/bash
+## Author: Sean Reyboz
+## Description: A small script to effortlessly install dwm, dmenu & slstatus 
+
+### Colors
+RED=$(echo -e "\033[1;31m")
+GREEN=$(echo -e "\033[1;32m")
+YELLOW=$(echo -e "\033[1;33m")
+BLUE=$(echo -e "\033[1;34m")
+RESET=$(echo -e "\033[0m")
+
+### Catch SIGINT
+trap "echo -e \"\n\tKeyboard interrupt received,$RED exiting $RESET\n\"; exit 2" INT
+
+## Installs all suckless utilities
+function dwm() {
+        
+        echo -e "$BLUE\tCopying all the files into$GREEN $HOME/.config/suckless...$RESET"
+        if [[ -d $HOME/.config ]]
+        then
+                cp -r $PWD $HOME/.config
+        else
+                mkdir $HOME/.config
+                cp -r $PWD $HOME/.config
+        fi
+
+        echo -e "$GREEN\tDone.\n $BLUE\tCompilling all the packages...$RESET"
+        cd $HOME/.config/suckless
+        mkdir logs
+        cd dwm
+        rm config.h
+        make -j4 &>/dev/null && sudo make install &>$HOME/.config/suckless/logs/dwm.log
+        cd ../slstatus
+        rm config.h
+        make -j4 &>/dev/null && sudo make install &>$HOME/.config/suckless/logs/slstatus.log
+        cd ../dmenu
+        rm config.h
+        make -j4 &>/dev/null && sudo make install &>$HOME/.config/suckless/logs/dmenu.log
+        cd ../dwmblocks
+        rm blocks.h
+        make &>/dev/null && sudo make clean install &>$HOME/.config/suckless/logs/dwmblocks.log
+
+        echo -e "$GREEN\tDone.$RESET"
+
+}
+
+function dm() {
+        if [[ -d /usr/share/xsessions ]]; then
+                echo -e "$BLUE\n\tGenerating a Desktop Manager entry for dwm... $RESET"
+                cd /usr/share/xsessions
+                sudo touch dwm.desktop
+                sudo chown $USER dwm.desktop
+                cat > dwm.desktop <<EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=Dynamic window manager
+Exec=/home/$USER/.config/suckless/autostart
+Icon=dwm
+Type=XSession
+
+EOF
+        fi
+}
+
+function xinit() {
+        
+       cat > $HOME/.config/suckless/xinitrc <<EOF
+##
+## Example .xinitrc file to be placed in the \$HOME directory that is read when executing the 'startx' command
+## Here you can tell X which program to execute when starting a new X server
+## 
+## Keep in mind that it is a simple example to show what options can be used  
+##
+
+## Set your keyboard layout here
+setxkbmap fr &
+
+## If you're using nitrogen to draw wallpapers, uncomment that line
+#nitrogen --restore &
+
+## If you're using picom (compositor), uncomment that line
+#picom &
+
+## Start the status bar. Only uncomment ONE of these  
+#slstatus &
+#dwmblocks &
+
+## Start dwm (or any other WM)
+exec dwm
+
+EOF
+        
+        echo -e "$BLUE\n\tAn xinitrc example can be found in$GREEN $HOME/.config/suckless/$RESET $BLUE if you don't want to use a Display Manager...$RESET"
+}
+
+
+function arch_install() {
+        
+        echo -e "$GREEN\n\t!!!$RESET Error logs can be found in$GREEN $HOME/.config/suckless/logs !!!$RESET\n"
+        
+        ## Array of dependencies
+        DEPENDENCIES=('alacritty' 'xorg-xsetroot' 'xorg-xinit' 'libxft' 'libxinerama')
+        
+        ## Declaring an empty array
+        declare -A TO_INSTALL
+        
+        ## index variable
+        i=0
+        
+        ## Check for the given dependencies. If one of them is not already installed, add it to the `TO_INSTALL` array
+        for dep in ${DEPENDENCIES[@]}; do
+                [[ $(pacman -Q $dep 2>/dev/null) ]] && continue || TO_INSTALL[$i]="$dep"
+                let i++
+        done
+        
+        ## if TO_INSTALL is not empty, install all the packages that it contains
+        [ ${#TO_INSTALL[@]} -ne 0 ] && "\t$YELLOW Autoinstall requires root privileges... $RESET"; sudo pacman -S "${TO_INSTALL[@]}"
+
+        ## Execute all the functions of the installer
+        dwm
+        dm
+        xinit 
+        
+        echo -e "$GREEN\n\tDone...$BLUE Installation complete. $RESET"
+}
+
+arch_install

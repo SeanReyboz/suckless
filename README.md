@@ -1,2 +1,4 @@
-# suckless
-dwm, dmenu and other suckless tools
+# Suckless tools
+
+Repo containing dwm and all the suckless tools I use
+
