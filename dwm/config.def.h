@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 15;        /* gaps between windows */
+static const unsigned int gappx     = 15;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -22,7 +22,6 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { nord_bg,   nord_blue, nord_blue },
 };
 
-
 /* tagging */
 static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 
@@ -35,6 +34,12 @@ static const Rule rules[] = {
 	{ "Gimp",     			NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  			NULL,       NULL,       1 << 8,       0,           -1 },
 };
+
+/* volume control */
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -62,14 +67,15 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-fn", dmenufont, "-nb", nord_bg, "-nf", nord_fg, "-sb", nord_blue, "-sf", nord_bg, NULL };
-static const char *termcmd[]  = { "alacritty", 	NULL };
-//static const char *termcmd[]  = { "st",         NULL };
-static const char *discord[]  = { "discord", 	NULL };
-static const char *spotify[]  = { "spotify", 	NULL };
-static const char *browser[]  = { "firefox", 	NULL };
-static const char *filemngr[]  = { "pcmanfm", 	NULL };
-static const char *pavu[]  = { "pavucontrol", 	NULL };
+//static const char *termcmd[] = { "alacritty", 	NULL };
+static const char *termcmd[] = { "st",          NULL };
+static const char *discord[] = { "discord", 	NULL };
+static const char *spotify[] = { "spotify", 	NULL };
+static const char *browser[] = { "firefox", 	NULL };
+static const char *file[] = { "pcmanfm", 	    NULL };
+static const char *pavu[] = { "pavucontrol", 	NULL };
 
+#include <X11/XF86keysym.h>
 #include "shiftview.c"
 
 static Key keys[] = {
@@ -78,7 +84,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ControlMask,           XK_f,      spawn,          {.v = browser } },
 	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = discord } },
-	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = filemngr } },
+	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = file } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = pavu } },
 	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = spotify } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -110,13 +116,25 @@ static Key keys[] = {
 	TAGKEYS(                        XK_ampersand,                      	0)
 	TAGKEYS(                        XK_eacute,                      	1)
 	TAGKEYS(                        XK_quotedbl,                      	2)
-	TAGKEYS(                        XK_apostrophe,                          3)
+	TAGKEYS(                        XK_apostrophe,                      3)
 	TAGKEYS(                        XK_parenleft,                      	4)
 	TAGKEYS(                        XK_minus,                      		5)
 	TAGKEYS(                        XK_egrave,                      	6)
-	TAGKEYS(                        XK_underscore,                          7)
+	TAGKEYS(                        XK_underscore,                      7)
 	TAGKEYS(                        XK_ccedilla,                      	8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+
+    /* Volume control */
+    { 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+
+    /* alternative to the above
+     * { MODKEY,                       XK_F11, spawn, {.v = downvol } },
+     * { MODKEY,                       XK_F9,  spawn, {.v = mutevol } },
+     * { MODKEY,                       XK_F12, spawn, {.v = upvol   } },
+     */
+
 };
 
 /* button definitions */
