@@ -35,7 +35,17 @@ static const Rule rules[] = {
 	{ "Firefox",  			NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
-/* volume control */
+/* brightness control (xf86keysym) */
+static const char *brghtup[]    = { "/usr/bin/brightnessctl", "set", "+13" };
+static const char *brghtdown[]  = { "/usr/bin/brightnessctl", "set", "13-" };
+
+/* keyboard backlight control (xf86keysym & asusctl) 
+ * ONLY WORKS WITH AN ASUS ROG LAPTOP
+ */
+static const char *kbdoff[]  = { "asusctl", "-k", "off" };
+static const char *kbdup[]  = { "asusctl", "-k", "high" };
+
+/* volume control (xf86keysym) */
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
@@ -75,6 +85,7 @@ static const char *browser[] = { "firefox", 	NULL };
 static const char *file[] = { "pcmanfm", 	    NULL };
 static const char *pavu[] = { "pavucontrol", 	NULL };
 
+/* https://cgit.freedesktop.org/xorg/proto/x11proto/tree/XF86keysym.h */
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 
@@ -124,10 +135,18 @@ static Key keys[] = {
 	TAGKEYS(                        XK_ccedilla,                      	8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
+    /* brightness ctrl */
+    { 0,                       XF86XK_MonBrightnessUp, spawn,   {.v = brghtup   } },
+    { 0,                       XF86XK_MonBrightnessDown, spawn, {.v = brghtdown } },
+
+    /* keyboard lighting */
+    { 0,                       XF86XK_KbdBrightnessDown, spawn, {.v = kbdoff   } },
+    { 0,                       XF86XK_KbdBrightnessUp, spawn,   {.v = kbdup    } },
+
     /* Volume control */
-    { 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+    { 0,                       XF86XK_AudioLowerVolume, spawn,  {.v = downvol } },
+	{ 0,                       XF86XK_AudioMute, spawn,         {.v = mutevol } },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn,  {.v = upvol   } },
 
     /* alternative to the above
      * { MODKEY,                       XK_F11, spawn, {.v = downvol } },
