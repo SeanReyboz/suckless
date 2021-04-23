@@ -36,12 +36,12 @@ static const Rule rules[] = {
 };
 
 /* brightness control (xf86keysym) */
-static const char *brghtup[]    = { "/usr/bin/brightnessctl", "set", "+13" };
-static const char *brghtdown[]  = { "/usr/bin/brightnessctl", "set", "13-" };
+static const char *brghtup[]   = { "/usr/bin/brightnessctl", "set", "+13" };
+static const char *brghtdown[] = { "/usr/bin/brightnessctl", "set", "13-" };
 
 /* keyboard backlight control (xf86keysym) */
-static const char *kbdup[]   = { "/home/sean/scripts/kbd_backlight", "up"    };
-static const char *kbddown[] = { "/home/sean/scripts/kbd_backlight", "down"  };
+static const char *kbdup[]   = { "/home/sean/scripts/kbd_backlight", "up"   };
+static const char *kbddown[] = { "/home/sean/scripts/kbd_backlight", "down" };
 
 /* volume control (xf86keysym) */
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
