@@ -39,17 +39,14 @@ static const Rule rules[] = {
 static const char *brghtup[]    = { "/usr/bin/brightnessctl", "set", "+13" };
 static const char *brghtdown[]  = { "/usr/bin/brightnessctl", "set", "13-" };
 
-/* keyboard backlight control (xf86keysym & asusctl) 
- * ONLY WORKS WITH AN ASUS ROG LAPTOP
- */
-static const char *kbdoff[]  = { "asusctl", "-k", "off" };
-static const char *kbdup[]  = { "asusctl", "-k", "high" };
+/* keyboard backlight control (xf86keysym) */
+static const char *kbdup[]   = { "/home/sean/scripts/kbd_backlight", "up"    };
+static const char *kbddown[] = { "/home/sean/scripts/kbd_backlight", "down"  };
 
 /* volume control (xf86keysym) */
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -77,13 +74,13 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-fn", dmenufont, "-nb", nord_bg, "-nf", nord_fg, "-sb", nord_blue, "-sf", nord_bg, NULL };
-//static const char *termcmd[] = { "alacritty", 	NULL };
-static const char *termcmd[] = { "st",          NULL };
-static const char *discord[] = { "discord", 	NULL };
-static const char *spotify[] = { "spotify", 	NULL };
-static const char *browser[] = { "firefox", 	NULL };
-static const char *file[] = { "pcmanfm", 	    NULL };
-static const char *pavu[] = { "pavucontrol", 	NULL };
+static const char *termcmd[]  = { "alacritty", 	    NULL };
+//static const char *termcmd[]  = { "st",             NULL };
+static const char *discord[]  = { "discord", 	    NULL };
+static const char *spotify[]  = { "spotify", 	    NULL };
+static const char *browser[]  = { "firefox", 	    NULL };
+static const char *file[]     = { "pcmanfm", 	    NULL };
+static const char *pavu[]     = { "pavucontrol",    NULL };
 
 /* https://cgit.freedesktop.org/xorg/proto/x11proto/tree/XF86keysym.h */
 #include <X11/XF86keysym.h>
@@ -140,8 +137,8 @@ static Key keys[] = {
     { 0,                       XF86XK_MonBrightnessDown, spawn, {.v = brghtdown } },
 
     /* keyboard lighting */
-    { 0,                       XF86XK_KbdBrightnessDown, spawn, {.v = kbdoff   } },
     { 0,                       XF86XK_KbdBrightnessUp, spawn,   {.v = kbdup    } },
+    { 0,                       XF86XK_KbdBrightnessDown, spawn, {.v = kbddown  } },
 
     /* Volume control */
     { 0,                       XF86XK_AudioLowerVolume, spawn,  {.v = downvol } },

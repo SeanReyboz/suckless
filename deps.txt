@@ -1,0 +1,21 @@
+--- DEPENDENCIES
+- xorg
+    -- libxinerama
+    -- libxft
+    -- xorg-server
+    -- xorg-xinit (if no Display Manager)
+
+- brightnessctl (monitor & kbd brightness control)
+
+- pcmanfm (file manager, not required)
+
+- pulseaudio
+    -- pavucontrol (GUI volume control)
+    -- pactl (CLI volume control)
+    -- plauerctl (required by the spotify script)
+
+--- FONTS
+
+- UbuntuMono Nerd Font (`nerd-fonts-ubuntu-mono` in the AUR)
+- Material Design Icons (`ttf-material-design-icons` in the standard Arch repo
+- A font that supports japanese chars (noto CJK jp `https://www.google.com/get/noto/#sans-jpan` or any other)

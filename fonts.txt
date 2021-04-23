@@ -1,5 +1,0 @@
---- FONTS
-
-* UbuntuMono Nerd Font (`nerd-fonts-ubuntu-mono` in the AUR)
-* Material Design Icons (`ttf-material-design-icons` in the standard Arch repo
-* A font that supports japanese chars (you can use the noto CJK jp available here: `https://www.google.com/get/noto/#sans-jpan` or any other)
