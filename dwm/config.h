@@ -6,7 +6,7 @@ static const unsigned int gappx     = 15;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "UbuntuMono Nerd Font:size=14:antialias=true", /*"undefined medium:size=12",*/ "Material Design Icons:size=15" };
+static const char *fonts[]          = { "UbuntuMono Nerd Font:size=14:antialias=true", /*"undefined medium:size=13",*/ "Material Design Icons:size=15" };
 static const char dmenufont[]       = "UbuntuMono Nerd Font:size=14";
 
 static const char fg[]              = "#FFFFFF";
@@ -36,17 +36,22 @@ static const Rule rules[] = {
 };
 
 /* brightness control (xf86keysym) */
-static const char *brghtup[]    = { "/usr/bin/brightnessctl", "set", "+13" };
-static const char *brghtdown[]  = { "/usr/bin/brightnessctl", "set", "13-" };
+static const char *brghtup[]    = { "/usr/bin/brightnessctl", "set", "+13", NULL };
+static const char *brghtdown[]  = { "/usr/bin/brightnessctl", "set", "13-", NULL };
 
 /* keyboard backlight control (xf86keysym) */
-static const char *kbdup[]   = { "/home/sean/scripts/kbd_backlight", "up"    };
-static const char *kbddown[] = { "/home/sean/scripts/kbd_backlight", "down"  };
+static const char *kbdup[]   = { "/home/sean/scripts/kbd_backlight", "up",   NULL  };
+static const char *kbddown[] = { "/home/sean/scripts/kbd_backlight", "down", NULL  };
 
 /* volume control (xf86keysym) */
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+
+/* player control (xf86keysym) */
+static const char *next[]   = { "/usr/bin/playerctl", "next",       NULL };
+static const char *prev[]   = { "/usr/bin/playerctl", "previous",   NULL };
+static const char *toggle[] = { "/usr/bin/playerctl", "play-pause", NULL };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -74,8 +79,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-fn", dmenufont, "-nb", nord_bg, "-nf", nord_fg, "-sb", nord_blue, "-sf", nord_bg, NULL };
-static const char *termcmd[]  = { "alacritty", 	    NULL };
-//static const char *termcmd[]  = { "st",             NULL };
+//static const char *termcmd[]  = { "alacritty", 	    NULL };
+static const char *termcmd[]  = { "st",             NULL };
 static const char *discord[]  = { "discord", 	    NULL };
 static const char *spotify[]  = { "spotify", 	    NULL };
 static const char *browser[]  = { "firefox", 	    NULL };
@@ -133,17 +138,20 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
     /* brightness ctrl */
-    { 0,                       XF86XK_MonBrightnessUp, spawn,   {.v = brghtup   } },
-    { 0,                       XF86XK_MonBrightnessDown, spawn, {.v = brghtdown } },
+    { 0,                       XF86XK_MonBrightnessUp,      spawn,      {.v = brghtup   } },
+    { 0,                       XF86XK_MonBrightnessDown,    spawn,      {.v = brghtdown } },
 
     /* keyboard lighting */
-    { 0,                       XF86XK_KbdBrightnessUp, spawn,   {.v = kbdup    } },
-    { 0,                       XF86XK_KbdBrightnessDown, spawn, {.v = kbddown  } },
+    { 0,                       XF86XK_KbdBrightnessUp,      spawn,      {.v = kbdup     } },
+    { 0,                       XF86XK_KbdBrightnessDown,    spawn,      {.v = kbddown   } },
 
     /* Volume control */
-    { 0,                       XF86XK_AudioLowerVolume, spawn,  {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn,         {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn,  {.v = upvol   } },
+    { 0,                       XF86XK_AudioLowerVolume,     spawn,      {.v = downvol   } },
+	{ 0,                       XF86XK_AudioMute,            spawn,      {.v = mutevol   } },
+	{ 0,                       XF86XK_AudioRaiseVolume,     spawn,      {.v = upvol     } },
+	{ 0,                       XF86XK_AudioNext,            spawn,      {.v = next      } },
+	{ 0,                       XF86XK_AudioPrev,            spawn,      {.v = prev      } },
+	{ 0,                       XF86XK_AudioPlay,            spawn,      {.v = toggle    } },
 
     /* alternative to the above
      * { MODKEY,                       XK_F11, spawn, {.v = downvol } },

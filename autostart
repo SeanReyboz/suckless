@@ -3,7 +3,8 @@
 setxkbmap fr &
 nitrogen --restore &
 dunst &
-picom &
+picom --experimental-backends &
+xautolock -time 5 -locker slock &
 #slstatus &
 dwmblocks &
 exec dwm

@@ -14,6 +14,10 @@
     -- pactl (CLI volume control)
     -- plauerctl (required by the spotify script)
 
+- xautolock (slock)
+
+- picom-tryone-git (dual_kawase blur method) 
+
 --- FONTS
 
 - UbuntuMono Nerd Font (`nerd-fonts-ubuntu-mono` in the AUR)
