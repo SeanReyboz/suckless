@@ -2,6 +2,11 @@
 
 simple screen locker utility for X. 
 
+My patched version of [khuedoan](https://github.com/khuedoan/slock)'s
+slock fork.
+
+<br/>
+
 ![slock](https://i.imgur.com/2R315sM.gif)
 
 ## Requirements
