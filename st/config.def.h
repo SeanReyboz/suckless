@@ -5,8 +5,10 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "undefined medium:pixelsize=18:antialias=true:autohint=true";
-static int borderpx = 2;
+
+//static char *font = "undefined medium:pixelsize=18:antialias=true:autohint=true";
+static char *font = "Fira Mono:pixelsize=18:antialias=true:autohint=true";
+static int borderpx = 15;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -144,7 +146,7 @@ static unsigned int defaultrcs = 256;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 4;
+static unsigned int cursorshape = 2;
 
 /*
  * Default columns and rows numbers

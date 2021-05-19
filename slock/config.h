@@ -9,10 +9,13 @@ static const char *colorname[NUMCOLS] = {
 };
 
 /* lock screen opacity */
-static const float alpha = 0.7;
+static const float alpha = 0.5;
 
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 1;
+
+/* time in seconds to cancel lock with mouse movement */
+static const int timetocancel = 5;
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 120;

@@ -2,8 +2,8 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 15;       /* gaps between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappx     = 25;       /* gaps between windows */
+static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "UbuntuMono Nerd Font:size=14:antialias=true", /*"undefined medium:size=13",*/ "Material Design Icons:size=15" };
@@ -84,7 +84,7 @@ static const char *termcmd[]  = { "st",             NULL };
 static const char *discord[]  = { "discord", 	    NULL };
 static const char *spotify[]  = { "spotify", 	    NULL };
 static const char *browser[]  = { "firefox", 	    NULL };
-static const char *file[]     = { "pcmanfm", 	    NULL };
+static const char *file[]     = { "thunar", 	    NULL };
 static const char *pavu[]     = { "pavucontrol",    NULL };
 
 /* https://cgit.freedesktop.org/xorg/proto/x11proto/tree/XF86keysym.h */
