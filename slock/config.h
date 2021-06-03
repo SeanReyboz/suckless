@@ -3,9 +3,9 @@ static const char *user  = "nobody";
 static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "black",     /* after initialization */
-	[INPUT] =  "#005577",   /* during input */
-	[FAILED] = "#cc3333",   /* wrong password */
+	[INIT] =   "#000000",   /* after initialization */
+	[INPUT] =  "#282c34",   /* during input */
+	[FAILED] = "#be5046",   /* wrong password */
 };
 
 /* lock screen opacity */
@@ -24,7 +24,7 @@ static const int monitortime = 120;
 static const char * message = "Enter password to unlock";
 
 /* text color */
-static const char * text_color = "#ffffff";
+static const char * text_color = "#abb2bf";
 
 /* text size (must be a valid size) */
 static const char * text_size = "fixed";
