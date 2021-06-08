@@ -6,7 +6,7 @@ static const unsigned int gappx     = 25;       /* gaps between windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "UbuntuMono Nerd Font:size=14:antialias=true", /*"undefined medium:size=13",*/ "Material Design Icons:size=15" };
+static const char *fonts[]          = { "Iosevka Custom:size=12:antialias=true", "Material Design Icons:size=15" };
 static const char dmenufont[]       = "UbuntuMono Nerd Font:size=14";
 
 static const char fg[]              = "#FFFFFF";
@@ -86,6 +86,7 @@ static const char *spotify[]  = { "spotify", 	    NULL };
 static const char *browser[]  = { "firefox", 	    NULL };
 static const char *file[]     = { "thunar", 	    NULL };
 static const char *pavu[]     = { "pavucontrol",    NULL };
+static const char *slock[]    = { "slock",          NULL };
 
 /* https://cgit.freedesktop.org/xorg/proto/x11proto/tree/XF86keysym.h */
 #include <X11/XF86keysym.h>
@@ -100,6 +101,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = file } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = pavu } },
 	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = spotify } },
+	{ MODKEY|ControlMask,           XK_l,      spawn,          {.v = slock } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
